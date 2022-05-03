@@ -4,27 +4,48 @@ import java.io.*;
 
 public class MagicSquare {
     public static boolean generateMagicSquare(int n) {
-        int magic[][] = new int[n][n];
+        if(n % 2 == 0) {
+            System.out.println("an even number is not available");
+            return false;
+        }
+        if(n < 0) {
+            System.out.println("a negative number is not available");
+            return false;
+        }
+        int magic[][] = new int[n][n];//创建幻方数组
         int row = 0, col = n / 2, i, j, square = n * n;
-        for (i = 1; i <= square; i++) {
-            magic[row][col] = i;
-            if (i % n == 0)
+        for (i = 1; i <= square; i++) {//i遍历整个幻方，指向每个元素的偏移量
+            //罗伯法构造奇数阶幻方，即从第一行中间列开始依次斜向上递增加一
+            magic[row][col] = i;//让当前指向数字与i相等
+            if (i % n == 0)//遍历到下一行起始，row行数加一
                 row++;
             else {
-                if (row == 0)
+                if (row == 0)//行在第一行时，让row指向最后一行
                     row = n - 1;
                 else
-                    row--;
-                if (col == (n - 1))
+                    row--;//否则让row行数减一
+                if (col == (n - 1))//列指向最后一列，重新调到第一列
                     col = 0;
                 else
-                    col++;
+                    col++;//否则，列数加一
             }
         }
         for (i = 0; i < n; i++) {
             for (j = 0; j < n; j++)
                 System.out.print(magic[i][j] + "\t");
             System.out.println();
+        }
+        try {
+            File f2 = new File("src/P1/txt/6.txt");//output to the file
+            BufferedWriter bf = new BufferedWriter(new FileWriter(f2));
+            for (i = 0; i < n; i++) {
+                for (j = 0; j < n; j++)
+                    bf.write(magic[i][j] + "\t");
+                bf.write("\n");
+            }
+            bf.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return true;
     }
@@ -144,12 +165,24 @@ public class MagicSquare {
     }
         public static void main (String[]args){
 
-            boolean result;
+            boolean result, result1, result2, result3;
             String txt;
             for(int i = 1; i <= 5; i++) {
                 txt = "src/P1/txt/" + i + ".txt";
                 result = isLegalMagicSquare(txt);
                 System.out.println(i + ".txt" + " is " + result);
+                System.out.println();
             }
+            int n1 = 10, n2 = -5, n3 = 7;
+            result1 = generateMagicSquare(n1);
+            System.out.println("The result of " + n1 + " is " + result1 + "\n");
+            result2 = generateMagicSquare(n2);
+            System.out.println("The result of " + n2 + " is " + result2 + "\n");
+            result3 = generateMagicSquare(n3);
+            System.out.println("The result of " + n3 + " is " + result3 + "\n");
+            txt = "src/P1/txt/6.txt";
+            result = isLegalMagicSquare(txt);
+            System.out.println("6.txt" + " is " + result);
+            System.out.println();
         }
     }
