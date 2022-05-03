@@ -3,6 +3,7 @@
  */
 package turtle;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.ArrayList;
@@ -54,7 +55,8 @@ public class TurtleSoup {
      * @return the integer number of sides
      */
     public static int calculatePolygonSidesFromAngle(double angle) {
-        throw new RuntimeException("implement me!");
+        //throw new RuntimeException("implement me!");
+        return (int) Math.round(360 / (180 - angle));
     }
 
     /**
@@ -96,6 +98,7 @@ public class TurtleSoup {
     public static double calculateBearingToPoint(double currentBearing, int currentX, int currentY,
                                                  int targetX, int targetY) {
         //throw new RuntimeException("implement me!");
+        if (targetX == currentX && targetY == currentY) return 0;
         double de = Math.atan2(targetY - currentY, targetX - currentX) / Math.PI * 180;
         de = 90 - currentBearing - de;
         if (de < 0)
@@ -138,7 +141,40 @@ public class TurtleSoup {
      * @return minimal subset of the input points that form the vertices of the perimeter of the convex hull
      */
     public static Set<Point> convexHull(Set<Point> points) {
-        throw new RuntimeException("implement me!");
+        //throw new RuntimeException("implement me!");
+        if(points.size() < 3)//The number is less than three directly returned
+            return points;
+        Point[] spots = points.toArray(new Point[points.size()]);
+        int temp = 0;//Saves the current bottom-right point
+        for(int i = 1; i < spots.length; i++) {
+            temp = spots[i].x() < spots[temp].x() ? i : temp;
+            if (spots[i].x() == spots[temp].x()) {
+                temp = spots[i].y() < spots[temp].y() ? i : temp;
+            }
+        }
+        int bpoint = temp;
+        Set<Point> result = new HashSet<Point>();
+        result.add(spots[temp]);
+        double mindegree = 0, mindegree1 = 360;
+        int npoint = temp == 0 ? 1 : 0;
+        while(bpoint != npoint) {
+            for (int i = 0; i < spots.length; i++) {
+                if(temp != i) {
+                    double temp1 = calculateBearingToPoint(mindegree, (int)spots[temp].x(), (int)spots[temp].y(),
+                            (int)spots[i].x(), (int)spots[i].y());
+                    if(temp1 < mindegree1) {
+                        npoint = i;
+                        mindegree1 = temp1;
+                    }
+                }
+            }
+            mindegree += mindegree1;
+            if(mindegree > 360) mindegree -= 360;
+            result.add(spots[npoint]);
+            temp = npoint;
+            mindegree1 = 360;
+        }
+        return result;
     }
     
     /**
