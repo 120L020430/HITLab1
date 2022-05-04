@@ -1,33 +1,32 @@
-package P1;
 
 import java.io.*;
 
 public class MagicSquare {
     public static boolean generateMagicSquare(int n) {
-        if(n % 2 == 0) {
+        if (n % 2 == 0) {
             System.out.println("an even number is not available");
             return false;
         }
-        if(n < 0) {
+        if (n < 0) {
             System.out.println("a negative number is not available");
             return false;
         }
-        int magic[][] = new int[n][n];//创建幻方数组
+        int magic[][] = new int[n][n]; //创建幻方数组
         int row = 0, col = n / 2, i, j, square = n * n;
-        for (i = 1; i <= square; i++) {//i遍历整个幻方，指向每个元素的偏移量
+        for (i = 1; i <= square; i++) { //i遍历整个幻方，指向每个元素的偏移量
             //罗伯法构造奇数阶幻方，即从第一行中间列开始依次斜向上递增加一
-            magic[row][col] = i;//让当前指向数字与i相等
-            if (i % n == 0)//遍历到下一行起始，row行数加一
+            magic[row][col] = i; //让当前指向数字与i相等
+            if (i % n == 0) //遍历到下一行起始，row行数加一
                 row++;
             else {
-                if (row == 0)//行在第一行时，让row指向最后一行
+                if (row == 0) //行在第一行时，让row指向最后一行
                     row = n - 1;
                 else
-                    row--;//否则让row行数减一
-                if (col == (n - 1))//列指向最后一列，重新调到第一列
+                    row--; //否则让row行数减一
+                if (col == (n - 1)) //列指向最后一列，重新调到第一列
                     col = 0;
                 else
-                    col++;//否则，列数加一
+                    col++; //否则，列数加一
             }
         }
         for (i = 0; i < n; i++) {
@@ -36,8 +35,9 @@ public class MagicSquare {
             System.out.println();
         }
         try {
-            File f2 = new File("src/P1/txt/6.txt");//output to the file
-            BufferedWriter bf = new BufferedWriter(new FileWriter(f2));
+            File f2 = new File("src/P1/txt/6.txt"); //output to the file
+            OutputStreamWriter bf = new OutputStreamWriter(
+                    new FileOutputStream(f2), "GBK");
             for (i = 0; i < n; i++) {
                 for (j = 0; j < n; j++)
                     bf.write(magic[i][j] + "\t");
@@ -60,7 +60,9 @@ public class MagicSquare {
         File file = new File(fileName);
         BufferedReader square = null;
         try {
-            square = new BufferedReader(new FileReader(file));
+            InputStreamReader fr = new InputStreamReader(
+                    new FileInputStream(file), "GBK");
+            square = new BufferedReader(fr);
             String squline;
             //the first line
             squline = square.readLine();
@@ -97,7 +99,7 @@ public class MagicSquare {
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
                     try {
-                        MagicSquare[i][j] = Integer.valueOf(Msquare[i][j]);
+                        MagicSquare[i][j] = Integer.parseInt(Msquare[i][j]);
                     } catch (NumberFormatException e) {
                         System.out.println("Square[" + i + "][" + j + "] is not an int");
                         return false;
@@ -163,11 +165,11 @@ public class MagicSquare {
         }
         return true;
     }
-        public static void main (String[]args){
+        public static void main (String[]args) {
 
             boolean result, result1, result2, result3;
             String txt;
-            for(int i = 1; i <= 5; i++) {
+            for (int i = 1; i <= 5; i++) {
                 txt = "src/P1/txt/" + i + ".txt";
                 result = isLegalMagicSquare(txt);
                 System.out.println(i + ".txt" + " is " + result);

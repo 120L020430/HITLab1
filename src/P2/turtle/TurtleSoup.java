@@ -70,7 +70,7 @@ public class TurtleSoup {
      */
     public static void drawRegularPolygon(Turtle turtle, int sides, int sideLength) {
         //throw new RuntimeException("implement me!");
-        for(int i = 0; i < sides; i++) {
+        for (int i = 0; i < sides; i++) {
             turtle.forward(sideLength);
             turtle.turn(180 - calculateRegularPolygonAngle(sides));
         }
@@ -124,7 +124,7 @@ public class TurtleSoup {
         //throw new RuntimeException("implement me!");
         List<Double> result = new ArrayList<>();
         double t = 0;
-        for(int i = 1; i < xCoords.size(); i++) {
+        for (int i = 1; i < xCoords.size(); i++) {
             t = calculateBearingToPoint(t, xCoords.get(i - 1), yCoords.get(i - 1),
                     xCoords.get(i), yCoords.get(i));
             result.add(t);
@@ -142,11 +142,11 @@ public class TurtleSoup {
      */
     public static Set<Point> convexHull(Set<Point> points) {
         //throw new RuntimeException("implement me!");
-        if(points.size() < 3)//The number is less than three directly returned
+        if (points.size() < 3)//The number is less than three directly returned
             return points;
         Point[] spots = points.toArray(new Point[points.size()]);
-        int temp = 0;//Saves the current bottom-right point
-        for(int i = 1; i < spots.length; i++) {
+        int temp = 0; //Saves the current bottom-right point
+        for (int i = 1; i < spots.length; i++) {
             temp = spots[i].x() < spots[temp].x() ? i : temp;
             if (spots[i].x() == spots[temp].x()) {
                 temp = spots[i].y() < spots[temp].y() ? i : temp;
@@ -157,19 +157,19 @@ public class TurtleSoup {
         result.add(spots[temp]);
         double mindegree = 0, mindegree1 = 360;
         int npoint = temp == 0 ? 1 : 0;
-        while(bpoint != npoint) {
+        while (bpoint != npoint) {
             for (int i = 0; i < spots.length; i++) {
-                if(temp != i) {
+                if (temp != i) {
                     double temp1 = calculateBearingToPoint(mindegree, (int)spots[temp].x(), (int)spots[temp].y(),
                             (int)spots[i].x(), (int)spots[i].y());
-                    if(temp1 < mindegree1) {
+                    if (temp1 < mindegree1) {
                         npoint = i;
                         mindegree1 = temp1;
                     }
                 }
             }
             mindegree += mindegree1;
-            if(mindegree > 360) mindegree -= 360;
+            if (mindegree > 360) mindegree -= 360;
             result.add(spots[npoint]);
             temp = npoint;
             mindegree1 = 360;
@@ -186,7 +186,9 @@ public class TurtleSoup {
      * @param turtle the turtle context
      */
     public static void drawPersonalArt(Turtle turtle) {
-        throw new RuntimeException("implement me!");
+
+        //throw new RuntimeException("implement me!");
+
     }
 
     /**
@@ -201,8 +203,28 @@ public class TurtleSoup {
 
         //drawSquare(turtle, 40);
 
-        drawRegularPolygon(turtle, 6, 40);
-
+        //drawRegularPolygon(turtle, 6, 40);
+        PenColor[] colors = new PenColor[6];
+        colors[0] = PenColor.RED;
+        colors[1] = PenColor.ORANGE;
+        colors[2] = PenColor.YELLOW;
+        colors[3] = PenColor.GREEN;
+        colors[4] = PenColor.BLUE;
+        colors[5] = PenColor.MAGENTA;
+        for (int i = 1; i <= 20; i++) {
+            for (int j = 0; j < 6; j++) {
+                turtle.color(colors[j]);
+                drawRegularPolygon(turtle, 3, i * 8);
+                turtle.turn(60);
+            }
+        }
+        for (int i = 20; i > 0; i--) {
+            for (int j = 0; j < 6; j++) {
+                turtle.color(colors[j]);
+                drawRegularPolygon(turtle, 6, i * 4);
+                turtle.turn(60);
+            }
+        }
         // draw the window
         turtle.draw();
     }
