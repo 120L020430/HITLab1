@@ -1,28 +1,19 @@
 /* Copyright (c) 2007-2016 MIT 6.005 course staff, all rights reserved.
  * Redistribution of original or derived work requires permission of course staff.
  */
-package turtle;
+package P2.turtle;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Graphics2D;
+import P2.turtle.Action.ActionType;
+
+import javax.swing.*;
+import javax.swing.GroupLayout.Alignment;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.SwingWorker;
-
-import turtle.Action.ActionType;
 
 /**
  * Displays turtle graphics in a window on the screen.

@@ -1,7 +1,7 @@
 /* Copyright (c) 2007-2016 MIT 6.005 course staff, all rights reserved.
  * Redistribution of original or derived work requires permission of course staff.
  */
-package turtle;
+package P2.turtle;
 
 import java.util.HashSet;
 import java.util.List;
@@ -188,7 +188,27 @@ public class TurtleSoup {
     public static void drawPersonalArt(Turtle turtle) {
 
         //throw new RuntimeException("implement me!");
-
+        PenColor[] colors = new PenColor[6];
+        colors[0] = PenColor.RED;
+        colors[1] = PenColor.ORANGE;
+        colors[2] = PenColor.YELLOW;
+        colors[3] = PenColor.GREEN;
+        colors[4] = PenColor.BLUE;
+        colors[5] = PenColor.MAGENTA;
+        for (int i = 1; i <= 30; i++) {
+            for (int j = 0; j < 6; j++) {
+                turtle.color(colors[j]);
+                drawRegularPolygon(turtle, 3, i * 8);
+                turtle.turn(60);
+            }
+        }
+        for (int i = 30; i > 0; i--) {
+            for (int j = 0; j < 6; j++) {
+                turtle.color(colors[j]);
+                drawRegularPolygon(turtle, 6, i * 4);
+                turtle.turn(60);
+            }
+        }
     }
 
     /**
@@ -201,32 +221,17 @@ public class TurtleSoup {
     public static void main(String args[]) {
         DrawableTurtle turtle = new DrawableTurtle();
 
-        //drawSquare(turtle, 40);
-
-        //drawRegularPolygon(turtle, 6, 40);
-        PenColor[] colors = new PenColor[6];
-        colors[0] = PenColor.RED;
-        colors[1] = PenColor.ORANGE;
-        colors[2] = PenColor.YELLOW;
-        colors[3] = PenColor.GREEN;
-        colors[4] = PenColor.BLUE;
-        colors[5] = PenColor.MAGENTA;
-        for (int i = 1; i <= 20; i++) {
-            for (int j = 0; j < 6; j++) {
-                turtle.color(colors[j]);
-                drawRegularPolygon(turtle, 3, i * 8);
-                turtle.turn(60);
-            }
-        }
-        for (int i = 20; i > 0; i--) {
-            for (int j = 0; j < 6; j++) {
-                turtle.color(colors[j]);
-                drawRegularPolygon(turtle, 6, i * 4);
-                turtle.turn(60);
-            }
-        }
-        // draw the window
+        drawSquare(turtle, 40);
         turtle.draw();
+
+        DrawableTurtle turtle1 = new DrawableTurtle();
+        drawRegularPolygon(turtle1, 6, 40);
+        turtle1.draw();
+
+        DrawableTurtle turtle2 = new DrawableTurtle();
+        drawPersonalArt(turtle2);
+        // draw the window
+        turtle2.draw();
     }
 
 }
